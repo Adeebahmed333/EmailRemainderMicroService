@@ -33,19 +33,17 @@ class TicketRepository {
     }
   }
 
-  async update(ticketId,data)
-  { try {
-    const tickets = await NotificationTicket.findByPk(ticketId);
-    if(data.status)
-    {
-    tickets.status=data.status;
+  async update(ticketId, data) {
+    try {
+      const tickets = await NotificationTicket.findByPk(ticketId);
+      if (data.status) {
+        tickets.status = data.status;
+      }
+      await tickets.save();
+      return tickets;
+    } catch (error) {
+      console.log(error);
     }
-    await tickets.save();
-    return tickets;
-  } catch (error) {
-    console.log(error);
-  }
-
   }
 }
 

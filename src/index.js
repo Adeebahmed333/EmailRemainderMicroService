@@ -7,17 +7,17 @@ const TicketController = require("./controllers/ticket-controller");
 const jobs = require("./utils/job");
 // const apiRoutes=require('./routes/index');
 // const db=require('./models/index');
-const {createChannel,subscribeMessage}=require('./utils/messageQueue');
-const {REMINDER_BINDING_KEY}=require('./config/server-config');
-const EmailService=require('./services/email-service');
+const { createChannel, subscribeMessage } = require("./utils/messageQueue");
+const { REMINDER_BINDING_KEY } = require("./config/server-config");
+const EmailService = require("./services/email-service");
 const app = express();
 
 const prepareAndStartServer = async () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   // app.use('/api',apiRoutes);
-  const channel =await createChannel();
-  subscribeMessage(channel,EmailService,REMINDER_BINDING_KEY);
+  const channel = await createChannel();
+  subscribeMessage(channel, EmailService, REMINDER_BINDING_KEY);
   app.post("/api/v1/tickets", TicketController.create);
 
   app.listen(PORT, () => {

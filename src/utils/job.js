@@ -2,9 +2,9 @@ const cron = require("node-cron");
 const {
   sendBasicEmail,
   fetchPendingEmails,
-  updateTicket
+  updateTicket,
 } = require("../services/email-service");
-const sender=require('../config/email-config');
+const sender = require("../config/email-config");
 const setupJobs = () => {
   cron.schedule("*/1 * * * *", async () => {
     //console.log('Task Running Every Fifth Mins');
@@ -16,20 +16,20 @@ const setupJobs = () => {
       //   email.subject,
       //   email.content
       // );
-      sender.sendMail({
-        to:email.recipientEmail,
-        subject:email.subject,
-        text:email.content
-      },async(err,data)=>{
-           if(err)
-           {
+      sender.sendMail(
+        {
+          to: email.recipientEmail,
+          subject: email.subject,
+          text: email.content,
+        },
+        async (err, data) => {
+          if (err) {
             console.log(err);
-           }else
-           {
+          } else {
             console.log(data);
-            await updateTicket(email.id,{status:"SUCCESS"});
-           }
-      }
+            await updateTicket(email.id, { status: "SUCCESS" });
+          }
+        }
       );
     });
     console.log(response);
