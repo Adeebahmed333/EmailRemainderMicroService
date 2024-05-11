@@ -25,7 +25,7 @@ const subscribeMessage = async (channel, service, bindingKey) => {
       console.log(msg.content.toString());
       const payload = JSON.parse(msg.content.toString());
       service.subscribeEvents(payload);
-      //service(msg.content.toString());
+   
       channel.ack(msg);
     });
   } catch (error) {
